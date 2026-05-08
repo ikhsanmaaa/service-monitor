@@ -43,6 +43,12 @@ public class MonitoredService {
     private ServiceStatus status;
 
     @Column(length = 100)
+    private String responseCode;
+
+    @Column(length = 100)
+    private String messageStatus;
+
+    @Column
     private Long lastLatency;
 
     @Column(length = 100)

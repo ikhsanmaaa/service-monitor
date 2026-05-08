@@ -2,6 +2,7 @@ package com.ikhsan.servicemonitor.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,12 +16,17 @@ import com.ikhsan.servicemonitor.dto.request.CreateServiceRequest;
 import com.ikhsan.servicemonitor.dto.request.UpdateServiceRequest;
 import com.ikhsan.servicemonitor.dto.response.ServiceResponse;
 import com.ikhsan.servicemonitor.dto.response.WebResponse;
+import com.ikhsan.servicemonitor.service.HealthCheckService;
 import com.ikhsan.servicemonitor.service.MonitoredServiceService;
 
 @RestController
 public class MonitoredServiceController {
 
+    @Autowired
     private MonitoredServiceService monitoredServiceService;
+
+    @Autowired
+    private HealthCheckService healthCheckService;
 
     @PostMapping(path = "/api/services/create",
             consumes = MediaType.APPLICATION_JSON_VALUE,
@@ -52,11 +58,11 @@ public class MonitoredServiceController {
         return WebResponse.<ServiceResponse>builder().data(serviceResponse).build();
     }
 
-    @PatchMapping(path = "/api/services/{id}/update",
+    @PatchMapping(path = "/api/services/{id}",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public WebResponse<ServiceResponse> update(Long id, @RequestBody UpdateServiceRequest request) {
+    public WebResponse<ServiceResponse> update(@PathVariable Long id, @RequestBody UpdateServiceRequest request) {
 
         request.setId(id);
 
@@ -65,13 +71,26 @@ public class MonitoredServiceController {
         return WebResponse.<ServiceResponse>builder().data(serviceResponse).build();
     }
 
-    @DeleteMapping(path = "/api/services/{id}/delete",
+    @DeleteMapping(path = "/api/services/{id}",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public WebResponse<String> delete(Long id) {
+    public WebResponse<String> delete(@PathVariable Long id) {
 
         monitoredServiceService.delete(id);
 
         return WebResponse.<String>builder().data("Ok").build();
     }
+
+    @PostMapping(path = "/api/services/{id}/check",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public WebResponse<String> forceCheck(
+            @PathVariable Long id
+    ) {
+
+        healthCheckService.checkService(id);
+
+        return WebResponse.<String>builder().data("Ok").build();
+    }
+
 }

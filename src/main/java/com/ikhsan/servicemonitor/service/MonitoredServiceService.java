@@ -47,6 +47,8 @@ public class MonitoredServiceService {
         monitoredService.setUrl(request.getUrl());
         monitoredService.setCategory(request.getCategory());
         monitoredService.setStatus(ServiceStatus.DOWN);
+        monitoredService.setResponseCode(null);
+        monitoredService.setMessageStatus(null);
         monitoredService.setLastLatency(null);
         monitoredService.setLastCheckedAt(null);
 
