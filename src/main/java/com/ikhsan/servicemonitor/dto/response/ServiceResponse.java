@@ -20,6 +20,6 @@ public class ServiceResponse {
     private String url;
     private String category;
     private String status;
-    private Long latency;
+    private Long lastLatency;
     private LocalDateTime lastCheckedAt;
 }

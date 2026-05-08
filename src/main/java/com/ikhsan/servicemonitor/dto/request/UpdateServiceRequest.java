@@ -2,6 +2,8 @@ package com.ikhsan.servicemonitor.dto.request;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -15,6 +17,7 @@ import lombok.Setter;
 @Setter
 public class UpdateServiceRequest {
 
+    @JsonIgnore
     @NotBlank
     @Size(max = 100)
     private Long id;
@@ -29,10 +32,7 @@ public class UpdateServiceRequest {
     private String category;
 
     @Size(max = 100)
-    private String status;
-
-    @Size(max = 100)
-    private Long latency;
+    private Long lastLatency;
 
     @Size(max = 100)
     private LocalDateTime lastCheckedAt;
