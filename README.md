@@ -55,9 +55,7 @@ src/main/java/com/ikhsan/servicemonitor
 ├── entity
 ├── dto
 ├── enums
-├── scheduler
 ├── config
-└── exception
 ````
 
 ---
